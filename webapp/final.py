@@ -7,7 +7,6 @@ def encode(image_link):
     # Encoding the image.
     response = requests.get(image_link)
     image = Image.open(BytesIO(response.content))
-    image = Image.open(image_link)
     HEX = str(phash(image))
     BIN = bin(int(HEX, 16))[2:].zfill(64)
     return BIN
@@ -39,7 +38,7 @@ def find_plagiarism(imageChecker, check_image_link, image_links, threshold=10):
 
     check_encoded = encode(check_image_link)
     for image_link in image_links:
-        encoded = encode(image_link, url=False)
+        encoded = encode(image_link)
         
         tmp = 64-sum([encoded[i]==check_encoded[i] for i in range(len(encoded))])
         if tmp < imageChecker.min_dist and tmp<threshold:

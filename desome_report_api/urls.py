@@ -20,5 +20,5 @@ from webapp import views
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path(r'check-plagiarism/', views.ImageProcessing.post()),
+    path(r'check-plagiarism/', views.ImageProcessing.post),
 ]
