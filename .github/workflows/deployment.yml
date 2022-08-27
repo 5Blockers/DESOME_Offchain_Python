@@ -21,3 +21,4 @@ jobs:
           git pull
           python3.10 -m pip install -r ./CheckApp/requirements.txt
           screen -d -m python3.10 manage.py runserver 0.0.0.0:8000
+# trigger
