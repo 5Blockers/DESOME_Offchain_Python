@@ -1,6 +1,6 @@
 from dataclasses import field
 from rest_framework import serializers
-from webapp.models import ImageChecker
+from .models import ImageChecker
 
 class ImageCheckerSerializer(serializers.ModelSerializer):
     class Meta:
