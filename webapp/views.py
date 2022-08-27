@@ -12,7 +12,7 @@ from . serializers import ImageCheckerSerializer
 @csrf_exempt
 def imageCheckerApi(request):
     if request.method=='POST':
-        images = ImageChecker.objects.all()
+        # images = ImageChecker.objects.all()
         image_data = JSONParser().parse(request)
         link1, link2 = image_data[0], image_data[1]
         checker = find_plagiarism(ImageChecker, link1, link2)
