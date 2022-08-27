@@ -11,7 +11,7 @@ def encode(image_link):
     BIN = bin(int(HEX, 16))[2:].zfill(64)
     return BIN
 
-def find_plagiarism(imageChecker, check_image_link, image_links, threshold=10):
+def find_plagiarism(check_image_link, image_links, threshold=10):
     """
     It takes an image link and a list of image links, and returns a tuple of a boolean and a string. 
     The boolean is True if the image link is similar to any of the images in the list, and False
@@ -39,15 +39,17 @@ def find_plagiarism(imageChecker, check_image_link, image_links, threshold=10):
     check_encoded = encode(check_image_link)
     for image_link in image_links:
         encoded = encode(image_link)
-        
+        min_dist = 64
+        flag = False
+        result_link = ''
         tmp = 64-sum([encoded[i]==check_encoded[i] for i in range(len(encoded))])
-        if tmp < imageChecker.min_dist and tmp<threshold:
-            tmp = imageChecker.min_dist
-            imageChecker.result_link = image_link
-            imageChecker.flag = True
+        if tmp < min_dist and tmp<threshold:
+            tmp = min_dist
+            result_link = image_link
+            flag = True
 
     #return imageChecker.flag, imageChecker.result_link
-    return imageChecker
+    return result_link
 
 
 print('Import successfully')

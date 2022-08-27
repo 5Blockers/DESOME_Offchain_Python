@@ -19,11 +19,11 @@ def imageCheckerApi(request):
     if request.method=='POST':
         # images = ImageChecker.objects.all()
         image_data = JSONParser().parse(request)
-        print(image_data[0]['link1'])
-        checker = find_plagiarism(ImageChecker(), image_data[0]['link1'], image_data[1]['link2'])
-        image_serializer=ImageCheckerSerializer(data=checker,many=True)
-        if image_serializer.is_valid():
-            return JsonResponse(True,safe=False)
-        return JsonResponse(False,safe=False)
+        print(list(image_data[0].values())[0])
+        checker = find_plagiarism(list(image_data[0].values())[0], [list(pair.values())[0] for pair in image_data[1]])
+        # image_serializer=ImageCheckerSerializer(data=checker,many=True)
+        # if image_serializer.is_valid():
+        #     return JsonResponse(True,safe=False)
+        return JsonResponse(checker,safe=False)
     # elif request.method=='GET':
     #     return JsonResponse("Hello",safe=False)
