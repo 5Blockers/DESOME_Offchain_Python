@@ -77,8 +77,10 @@ WSGI_APPLICATION = 'desome_report_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'host': "mongodb+srv://blockers:CBDRJ7UlaBNVm62A@desome.cpf14ip.mongodb.net/?retryWrites=true&w=majority",
+        "name":"test",
+        "authMechanism":"SCRAM-SHA-1"
     }
 }
 
