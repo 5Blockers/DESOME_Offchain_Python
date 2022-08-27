@@ -1,0 +1,23 @@
+name: DESOME Offchain SSH Remote Commands
+on:
+    push:
+      branches: [main]
+
+jobs:
+  job_one:
+    name: deployment
+    runs-on: ubuntu-latest
+    steps:
+    - name: ssh connection
+      uses: appleboy/ssh-action@master
+      with: 
+        host: 13.215.51.165
+        username: admin
+        key: ${{ secrets.SSH_SECRET }}
+        port: 22
+        script: |
+          screen -r
+          cd /home/admin/DESOME_Offchain_Python
+          git pull
+          python3.10 -m pip install -r ./CheckApp/requirements.txt
+          screen -d -m python3.10 manage.py runserver 0.0.0.0:8000
