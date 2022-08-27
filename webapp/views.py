@@ -1,17 +1,22 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from django.http.response import JsonResponse
+from webapp.final import find_plagiarism
 
-from django.http import HttpResponse
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from . models import ImageChecker
 from . serializers import ImageCheckerSerializer
-from webapp.final import find_plagiarism
+
 # Create your views here.
 
-class ImageProcessing(APIView):
-    def post(self, request):
-        imageChecker = find_plagiarism(ImageChecker.__new__, request.query_params['check_image_link'], request.query_params['image_link'])
-        serializer = ImageCheckerSerializer(imageChecker)
-        return Response(serializer.data)
-    
+@csrf_exempt
+def imageCheckerApi(request):
+    if request.method=='POST':
+        images = ImageChecker.objects.all()
+        image_data = JSONParser().parse(request)
+        link1, link2 = image_data[0], image_data[1]
+        checker = find_plagiarism(ImageChecker, link1, link2)
+        image_serializer=ImageCheckerSerializer(data=checker)
+        if image_serializer.is_valid():
+            return JsonResponse(True)
+        return JsonResponse(False)

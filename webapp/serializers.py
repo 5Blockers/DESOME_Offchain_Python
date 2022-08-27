@@ -1,7 +1,8 @@
+from dataclasses import field
 from rest_framework import serializers
-from . models import ImageChecker
+from webapp.models import ImageChecker
 
 class ImageCheckerSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageChecker
-    fields = '__all__'
+        fields = ('min_dist','flag','result_link')
